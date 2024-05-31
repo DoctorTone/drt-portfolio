@@ -4,15 +4,15 @@ import { SCENE, MODALS, TRANSITIONS } from "./Config.js";
 const useStore = create((set) => ({
   // Levels in system
   levels: ["Landing", "Main", "Portfolio", "DataViz"],
-  currentLevel: "Landing",
+  currentLevel: "Portfolio",
   setCurrentLevel: (levelName) => set({ currentLevel: levelName }),
-  onEnterLevel: false,
+  onEnterLevel: true,
   onLeaveLevel: false,
   enterLevel: (status) => set({ onEnterLevel: status }),
   leaveLevel: (status) => set({ onLeaveLevel: status }),
   // Island slot positions
-  activeIsland: "about",
-  targetIsland: "about",
+  activeIsland: "configurator",
+  targetIsland: "configurator",
   currentSlots: ["Contact", "About", "Services"],
   getSlotPosition: (slots, island) => {
     for (let i = 0; i < slots.length; ++i) {
