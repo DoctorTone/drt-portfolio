@@ -32,7 +32,7 @@ const CircularLevelsMenu = ({ onToggle, open }) => {
   return (
     <div id="circularLevels" className="panel">
       <CircleMenu
-        startAngle={-90}
+        startAngle={0}
         rotationAngle={360}
         itemSize={2}
         radius={5}
@@ -46,13 +46,6 @@ const CircularLevelsMenu = ({ onToggle, open }) => {
          */
         rotationAngleInclusive={false}
       >
-        <CircleMenuItem
-          onClick={() => updateLevel("Main", "about")}
-          tooltip="Home"
-          tooltipPlacement={TooltipPlacement.Top}
-        >
-          <HouseFill />
-        </CircleMenuItem>
         <CircleMenuItem
           onClick={() => updateLevel("Portfolio", "configurator")}
           tooltip="Portfolio"

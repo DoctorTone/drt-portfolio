@@ -10,19 +10,6 @@ const Levels = ({ levelName }) => {
   const onEnterLevel = useStore((state) => state.onEnterLevel);
 
   switch (levelName) {
-    case "Landing":
-      return <Landing />;
-      break;
-
-    case "Main":
-      return (
-        <>
-          <Overlay position-z={8} fadeOut={onEnterLevel} />
-          <MainLevel />
-        </>
-      );
-      break;
-
     case "Portfolio":
       return (
         <>

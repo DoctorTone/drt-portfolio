@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import LandingText from "./LandingText";
-import CircularOptionsMainMenu from "./CircularOptionsMainMenu";
 import CircularOptionsPortfolioMenu from "./CircularOptionsPortfolioMenu";
 import CircularOptionsDataVizMenu from "./CircularOptionsDataVizMenu";
 import CircularLevelsMenu from "./CircularLevelsMenu";
-import Bubble from "../components/Bubble";
 import { SocialUI } from "../UI/SocialUI.jsx";
+import Bubble from "../components/Bubble";
 
 const BUBBLE_TIME = 5 * 1000;
 
@@ -28,7 +26,7 @@ const UILevels = ({ levelName }) => {
   };
 
   useEffect(() => {
-    if (levelName === "Main") {
+    if (levelName === "Portfolio") {
       setTimeout(() => {
         setShowBubble(false);
       }, BUBBLE_TIME);
@@ -36,24 +34,6 @@ const UILevels = ({ levelName }) => {
   }, [levelName]);
 
   switch (levelName) {
-    case "Landing":
-      return <LandingText />;
-      break;
-
-    case "Main":
-      return (
-        <>
-          <SocialUI />
-          <CircularOptionsMainMenu
-            onToggle={toggleOptionsMenu}
-            open={optionsActive}
-          />
-          <CircularLevelsMenu onToggle={toggleLevelsMenu} open={levelsActive} />
-          {showBubble && <Bubble />}
-        </>
-      );
-      break;
-
     case "Portfolio":
       return (
         <>
@@ -63,6 +43,7 @@ const UILevels = ({ levelName }) => {
             open={optionsActive}
           />
           <CircularLevelsMenu onToggle={toggleLevelsMenu} open={levelsActive} />
+          {showBubble && <Bubble />}
         </>
       );
       break;

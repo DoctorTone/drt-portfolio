@@ -3,7 +3,7 @@ import { SCENE, MODALS, TRANSITIONS } from "./Config.js";
 
 const useStore = create((set) => ({
   // Levels in system
-  levels: ["Landing", "Main", "Portfolio", "DataViz"],
+  levels: ["Portfolio", "DataViz"],
   currentLevel: "Portfolio",
   setCurrentLevel: (levelName) => set({ currentLevel: levelName }),
   onEnterLevel: true,
@@ -13,14 +13,6 @@ const useStore = create((set) => ({
   // Island slot positions
   activeIsland: "configurator",
   targetIsland: "configurator",
-  currentSlots: ["Contact", "About", "Services"],
-  getSlotPosition: (slots, island) => {
-    for (let i = 0; i < slots.length; ++i) {
-      if (slots[i] === island) return i;
-    }
-
-    return -1;
-  },
   ignoreButtonPress: false,
   setActiveIsland: (island) => set({ activeIsland: island }),
   setTargetIsland: (island) => set({ targetIsland: island }),
