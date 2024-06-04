@@ -113,6 +113,9 @@ const ISLANDS = {
   // Performance island
   PerformanceModelPosition: [0, 1.5, 0],
   PerformanceTextPosition: [0, 3.5, 0],
+  // Space island
+  SpaceModelPosition: [0, 2.5, 0],
+  SpaceTextPosition: [0, 3, 0],
   // Tech island
   TechPosition: [-3.927, 0, 3.527],
   TechModelPosition: [0, 2.2, 0],
@@ -172,6 +175,7 @@ const MODALS = {
   PERFORMANCE: 20,
   CONFIGURATOR: 21,
   WHY: 22,
+  SPACE: 23,
 };
 
 const SLOTS = {

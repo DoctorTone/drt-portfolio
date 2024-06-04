@@ -22,6 +22,7 @@ import EditorModal from "./EditorModal.jsx";
 import PerformanceModal from "./PerformanceModal.jsx";
 import ConfiguratorModal from "./ConfiguratorModal.jsx";
 import WhyModal from "./WhyModal.jsx";
+import SpaceModal from "./SpaceModal.jsx";
 
 const ShowModals = ({ visibleModal }) => {
   const [selectSound] = useState(() => new Audio("./sounds/select.wav"));
@@ -72,8 +73,10 @@ const ShowModals = ({ visibleModal }) => {
         return <PerformanceModal showModal={true} />;
       case MODALS.CONFIGURATOR:
         return <ConfiguratorModal showModal={true} />;
-        case MODALS.WHY:
-          return <WhyModal showModal={true} />;
+      case MODALS.WHY:
+        return <WhyModal showModal={true} />;
+      case MODALS.SPACE:
+        return <SpaceModal showModal={true} />;
       default:
         return null;
     }

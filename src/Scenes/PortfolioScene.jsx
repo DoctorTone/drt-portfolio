@@ -8,6 +8,7 @@ import useStore from "../state/store.js";
 import { TRANSITIONS } from "../state/Config.js";
 import { IslandPerformance } from "../Islands/IslandPerformance.jsx";
 import { IslandConfigurator } from "../Islands/IslandConfigurator.jsx";
+import { IslandSpace } from "../Islands/IslandSpace.jsx";
 
 const PortfolioScene = () => {
   const targetIsland = useStore((state) => state.targetIsland);
@@ -54,6 +55,13 @@ const PortfolioScene = () => {
       configurator: (
         <IslandConfigurator
           name="configurator"
+          fadeOut={fadeOutStatus}
+          fadeIn={fadeInStatus}
+        />
+      ),
+      space: (
+        <IslandSpace
+          name="space"
           fadeOut={fadeOutStatus}
           fadeIn={fadeInStatus}
         />
