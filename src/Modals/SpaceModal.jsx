@@ -28,17 +28,17 @@ const SpaceModal = ({ showModal }) => {
       </Modal.Header>
 
       <Modal.Body>
-        Web-based rendering allows for thousands of objects to be displayed at
-        once. These can also be animated in real-time to produce some
-        interesting effects!
+        3D graphics are ideal for visualisation, but especially good when they
+        educate too. This demo shows the relative sizes and motions of the
+        planets.
         <div className="text-center mt-2 mb-3">
           <Row className="align-items-center">
             <Col xs={8}>
-              <Image src="./images/performance.jpg" rounded fluid />
+              <Image src="./images/solar.jpg" rounded fluid />
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/Instancing/spheres.html"
+                href="https://drt-software.com/Demos/Solar"
                 target="_blank"
                 className="me-2"
                 variant="primary"

@@ -40,8 +40,9 @@ const VRModal = ({ showModal }) => {
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/VRFramework/VRFramework.html"
+                href="https://drt-software.com/Demos/VRFramework/"
                 target="_blank"
+                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >

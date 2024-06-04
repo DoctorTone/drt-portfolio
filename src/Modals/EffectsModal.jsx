@@ -39,8 +39,9 @@ const EffectsModal = ({ showModal }) => {
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/Effects/effects.html"
+                href="https://drt-software.com/Demos/Effects/"
                 target="_blank"
+                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >

@@ -38,8 +38,9 @@ const PerformanceModal = ({ showModal }) => {
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/Instancing/spheres.html"
+                href="https://drt-software.com/Demos/Instancing/"
                 target="_blank"
+                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >

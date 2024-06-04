@@ -38,8 +38,9 @@ const PhysicsModal = ({ showModal }) => {
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/Physics/physics_demo.html"
+                href="https://drt-software.com/Demos/Physics/"
                 target="_blank"
+                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >
