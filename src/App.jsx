@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import Levels from "./Levels/Levels.jsx";
 import Lights from "./Scenes/Lights.jsx";
@@ -12,7 +13,14 @@ import { Logo } from "./components/Logo.jsx";
 const INTERACTIVE = false;
 const App = () => {
   const currentLevel = useStore((state) => state.currentLevel);
+  const setCurrentLevel = useStore((state) => state.setCurrentLevel);
+  const enterLevel = useStore((state) => state.enterLevel);
   const currentVisibleModal = useStore((state) => state.currentVisibleModal);
+
+  useEffect(() => {
+    setCurrentLevel("Portfolio");
+    enterLevel(true);
+  }, []);
 
   return (
     <>
