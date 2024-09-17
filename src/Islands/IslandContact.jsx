@@ -6,7 +6,7 @@ import { Phone } from "../Models/Phone.jsx";
 import { SCENE, ISLANDS, MODALS, TRANSITIONS } from "../state/Config.js";
 import useStore from "../state/store.js";
 
-export const IslandContact = ({ name, fadeIn, fadeOut }) => {
+export const IslandContact = ({ name, fadeIn, fadeOut, direction }) => {
   const [hovered, setHovered] = useState(false);
 
   let fadeInEnabled = fadeIn;
@@ -14,11 +14,10 @@ export const IslandContact = ({ name, fadeIn, fadeOut }) => {
 
   const setActiveIsland = useStore((state) => state.setActiveIsland);
   const setVisibleModal = useStore((state) => state.setVisibleModal);
-  const speechBubbleVisible = useStore((state) => state.speechBubbleVisible);
-  const displaySpeechBubble = useStore((state) => state.displaySpeechBubble);
   const setTransitionPhase = useStore((state) => state.setTransitionPhase);
 
   const textRef = useRef();
+  const textMaterialRef = useRef();
 
   const selectIsland = () => {
     setVisibleModal(MODALS.CONTACT);
@@ -40,22 +39,23 @@ export const IslandContact = ({ name, fadeIn, fadeOut }) => {
 
   useCursor(hovered);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (fadeOutEnabled) {
-      textRef.current.opacity -= delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity < 0) {
-        textRef.current.opacity = 0;
+      textMaterialRef.current.opacity -= delta * SCENE.FADE_DELAY;
+      textRef.current.position.x += delta * direction;
+      if (textMaterialRef.current.opacity < 0) {
+        textMaterialRef.current.opacity = 0;
         fadeOutEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_IN);
       }
     }
     if (fadeInEnabled) {
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 0;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 0;
       }
-      textRef.current.opacity += delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 1;
+      textMaterialRef.current.opacity += delta * SCENE.FADE_DELAY;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 1;
         fadeInEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_OUT);
         setActiveIsland(name);
@@ -78,6 +78,7 @@ export const IslandContact = ({ name, fadeIn, fadeOut }) => {
           position={ISLANDS.ContactModelPosition}
           rotation-y={Math.PI / 2}
           scale={0.007}
+          direction={direction}
         />
         <Shadow
           scale={1}
@@ -89,6 +90,7 @@ export const IslandContact = ({ name, fadeIn, fadeOut }) => {
         />
         <IslandPoints />
         <Text
+          ref={textRef}
           color="white"
           center
           fontSize={SCENE.FONT_SIZE}
@@ -99,7 +101,7 @@ export const IslandContact = ({ name, fadeIn, fadeOut }) => {
           outlineColor="black"
         >
           Contact
-          <meshBasicMaterial ref={textRef} transparent={true} />
+          <meshBasicMaterial ref={textMaterialRef} transparent={true} />
         </Text>
       </group>
     </Float>

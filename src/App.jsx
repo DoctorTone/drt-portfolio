@@ -6,6 +6,8 @@ import { getCameraPosition } from "./utils/Utils.jsx";
 import ShowModals from "./Modals/ShowModals.jsx";
 import useStore from "./state/store.js";
 import UILevels from "./UI/UILevels.jsx";
+import { NavBar } from "./components/NavBar.jsx";
+import { Logo } from "./components/Logo.jsx";
 
 const INTERACTIVE = false;
 const App = () => {
@@ -14,15 +16,19 @@ const App = () => {
 
   return (
     <>
-      <Canvas camera={{ position: getCameraPosition(window.innerWidth) }}>
-        <Lights />
-        <Levels levelName={currentLevel} />
-        <OrbitControls
-          enablePan={INTERACTIVE}
-          enableRotate={INTERACTIVE}
-          enableZoom={INTERACTIVE}
-        />
-      </Canvas>
+      {currentLevel !== "Landing" && <Logo />}
+      {currentLevel !== "Landing" && <NavBar level={currentLevel} />}
+      <div id="canvas-container">
+        <Canvas camera={{ position: getCameraPosition(window.innerWidth) }}>
+          <Lights level={currentLevel} />
+          <Levels levelName={currentLevel} />
+          <OrbitControls
+            enablePan={INTERACTIVE}
+            enableRotate={INTERACTIVE}
+            enableZoom={INTERACTIVE}
+          />
+        </Canvas>
+      </div>
       <UILevels levelName={currentLevel} />
       <ShowModals visibleModal={currentVisibleModal} />
     </>

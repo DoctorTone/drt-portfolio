@@ -40,7 +40,6 @@ const PerformanceModal = ({ showModal }) => {
               <Button
                 href="https://drt-software.com/Demos/Instancing/"
                 target="_blank"
-                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >

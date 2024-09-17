@@ -40,7 +40,6 @@ const PhysicsModal = ({ showModal }) => {
               <Button
                 href="https://drt-software.com/Demos/Physics/"
                 target="_blank"
-                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >

@@ -6,7 +6,7 @@ import { Tablet } from "../Models/Tablet.jsx";
 import { IslandPoints } from "./IslandPoints.jsx";
 import useStore from "../state/store.js";
 
-export const IslandBrainViz = ({ name, fadeIn, fadeOut }) => {
+export const IslandBrainViz = ({ name, fadeIn, fadeOut, direction }) => {
   const [hovered, setHovered] = useState(false);
 
   let fadeInEnabled = fadeIn;
@@ -17,6 +17,7 @@ export const IslandBrainViz = ({ name, fadeIn, fadeOut }) => {
   const setTransitionPhase = useStore((state) => state.setTransitionPhase);
 
   const textRef = useRef();
+  const textMaterialRef = useRef();
 
   const selectIsland = () => {
     setVisibleModal(MODALS.REALTIME);
@@ -38,19 +39,20 @@ export const IslandBrainViz = ({ name, fadeIn, fadeOut }) => {
 
   useCursor(hovered);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (fadeOutEnabled) {
-      textRef.current.opacity -= delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity < 0) {
-        textRef.current.opacity = 0;
+      textMaterialRef.current.opacity -= delta * SCENE.FADE_DELAY;
+      textRef.current.position.x += delta * direction;
+      if (textMaterialRef.current.opacity < 0) {
+        textMaterialRef.current.opacity = 0;
         fadeOutEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_IN);
       }
     }
     if (fadeInEnabled) {
-      textRef.current.opacity += delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 1;
+      textMaterialRef.current.opacity += delta * SCENE.FADE_DELAY;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 1;
         fadeInEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_OUT);
         setActiveIsland(name);
@@ -73,6 +75,7 @@ export const IslandBrainViz = ({ name, fadeIn, fadeOut }) => {
           position={ISLANDS.BrainVizModelPosition}
           rotation={[Math.PI, Math.PI / 2, -Math.PI / 8]}
           map={"./textures/brainVisualisation.jpg"}
+          direction={direction}
         />
         <Shadow
           scale={[2, 1, 1]}
@@ -85,6 +88,7 @@ export const IslandBrainViz = ({ name, fadeIn, fadeOut }) => {
         />
         <IslandPoints />
         <Text
+          ref={textRef}
           color="white"
           center
           fontSize={SCENE.FONT_SIZE}
@@ -95,7 +99,11 @@ export const IslandBrainViz = ({ name, fadeIn, fadeOut }) => {
           outlineColor="black"
         >
           Real-Time
-          <meshBasicMaterial ref={textRef} transparent={true} opacity={0} />
+          <meshBasicMaterial
+            ref={textMaterialRef}
+            transparent={true}
+            opacity={0}
+          />
         </Text>
       </group>
     </Float>

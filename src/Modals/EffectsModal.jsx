@@ -41,7 +41,6 @@ const EffectsModal = ({ showModal }) => {
               <Button
                 href="https://drt-software.com/Demos/Effects/"
                 target="_blank"
-                rel="noreferrer"
                 className="me-2"
                 variant="primary"
               >

@@ -1,22 +1,25 @@
 import React, { useState, useRef } from "react";
 import { Float, Text, useCursor, Shadow } from "@react-three/drei";
 import { IslandPoints } from "./IslandPoints.jsx";
-import { useFrame } from "@react-three/fiber";
-import { SCENE, ISLANDS, MODALS, TRANSITIONS } from "../state/Config.js";
 import { SpaceShip } from "../Models/SpaceShip.jsx";
+import { SCENE, ISLANDS, MODALS, TRANSITIONS } from "../state/Config.js";
 import useStore from "../state/store.js";
+import { useFrame } from "@react-three/fiber";
 
-export const IslandSpace = ({ name, fadeIn, fadeOut }) => {
+export const IslandSpace = ({ name, fadeIn, fadeOut, direction }) => {
   const [hovered, setHovered] = useState(false);
 
   let fadeInEnabled = fadeIn;
   let fadeOutEnabled = fadeOut;
 
-  const setActiveIsland = useStore((state) => state.setActiveIsland);
   const setVisibleModal = useStore((state) => state.setVisibleModal);
+  const speechBubbleVisible = useStore((state) => state.speechBubbleVisible);
+  const displaySpeechBubble = useStore((state) => state.displaySpeechBubble);
   const setTransitionPhase = useStore((state) => state.setTransitionPhase);
+  const setActiveIsland = useStore((state) => state.setActiveIsland);
 
   const textRef = useRef();
+  const textMaterialRef = useRef();
 
   const selectIsland = () => {
     setVisibleModal(MODALS.SPACE);
@@ -38,22 +41,23 @@ export const IslandSpace = ({ name, fadeIn, fadeOut }) => {
 
   useCursor(hovered);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (fadeOutEnabled) {
-      textRef.current.opacity -= delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity < 0) {
-        textRef.current.opacity = 0;
+      textMaterialRef.current.opacity -= delta * SCENE.FADE_DELAY;
+      textRef.current.position.x += delta * direction;
+      if (textMaterialRef.current.opacity < 0) {
+        textMaterialRef.current.opacity = 0;
         fadeOutEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_IN);
       }
     }
     if (fadeInEnabled) {
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 0;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 0;
       }
-      textRef.current.opacity += delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 1;
+      textMaterialRef.current.opacity += delta * SCENE.FADE_DELAY;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 1;
         fadeInEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_OUT);
         setActiveIsland(name);
@@ -71,33 +75,36 @@ export const IslandSpace = ({ name, fadeIn, fadeOut }) => {
         position={ISLANDS.MAIN_POSITION}
       >
         <SpaceShip
+          direction={direction}
           fadeIn={fadeIn}
           fadeOut={fadeOut}
           position={ISLANDS.SpaceModelPosition}
+          scale={0.4}
+          rotation-y={-Math.PI / 4}
         />
-
         <Shadow
-          scale={2.2}
-          opacity={0.85}
+          scale={1.5}
+          opacity={0.65}
           position={[
-            ISLANDS.PerformanceModelPosition[0],
-            ISLANDS.PerformanceModelPosition[1] + 0.175,
-            ISLANDS.PerformanceModelPosition[2],
+            ISLANDS.DRTModelPosition[0],
+            ISLANDS.DRTModelPosition[1] - 0.5,
+            ISLANDS.DRTModelPosition[2],
           ]}
         />
         <IslandPoints />
         <Text
+          ref={textRef}
           color="white"
           center
           fontSize={SCENE.FONT_SIZE}
-          position={ISLANDS.SpaceTextPosition}
+          position={ISLANDS.SpaceModelTextPosition}
           anchorX="center"
           anchorY="middle"
           outlineWidth={SCENE.FONT_OUTLINE_WIDTH}
           outlineColor="black"
         >
           Space
-          <meshBasicMaterial ref={textRef} transparent={true} />
+          <meshBasicMaterial ref={textMaterialRef} transparent={true} />
         </Text>
       </group>
     </Float>

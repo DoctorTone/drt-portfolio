@@ -24,24 +24,25 @@ const SpaceModal = ({ showModal }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Space</Modal.Title>
+        <Modal.Title>Solar System</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        3D graphics are ideal for visualisation, but especially good when they
-        educate too. This demo shows the relative sizes and motions of the
-        planets.
-        <div className="text-center mt-2 mb-3">
+        The web isn't just confined to visualisations. We can show simulations
+        of all shapes and sizes, from atomic structures to the solar system and
+        beyond. This is an example of an educational demo that shows the
+        relative sizes of the planets and simulates their rotations.
+        <div className="text-center mt-2">
           <Row className="align-items-center">
             <Col xs={8}>
               <Image src="./images/solar.jpg" rounded fluid />
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/Solar"
-                target="_blank"
-                className="me-2"
+                className="mb-3"
                 variant="primary"
+                href="https://www.drt-software.com/Solar/"
+                target="_blank"
               >
                 Launch demo
               </Button>

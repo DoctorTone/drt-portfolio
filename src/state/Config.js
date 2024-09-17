@@ -1,18 +1,20 @@
-import {
-  Vector3,
-  Quaternion,
-  MeshLambertMaterial,
-  MeshPhongMaterial,
-} from "three";
+import * as THREE from "three";
 
 const SCENE = {
   cameraPosition: [0, 1, 3.5],
-  lightPosition: new Vector3(10, 10, 10),
+  lightPosition: [10, 10, 10],
+  spotlightPosition: {
+    Main: [0, 4.5, 6.5],
+    Portfolio: [0, 4.5, 6.5],
+    DataViz: [0, 4.5, 6],
+  },
+  spotlightTarget: new THREE.Object3D(),
   rotationIntensity: 0.25,
-  sunPosition: [1, 0.15, 0],
+  sunDayPosition: [1, 0.15, 0],
+  sunNightPosition: [1, -0.15, 0],
   ambientIntensity: 0.5,
-  tempRot: new Quaternion(),
-  Y_AXIS: new Vector3(0, 1, 0),
+  tempRot: new THREE.Quaternion(),
+  Y_AXIS: new THREE.Vector3(0, 1, 0),
   MAIN_LEVEL: 0,
   LEVEL_1: 1,
   LEVEL_2: 2,
@@ -58,6 +60,8 @@ const TRANSITIONS = {
   FADE_NONE: 0,
   FADE_OUT: 1,
   FADE_IN: 2,
+  LEFT: 1,
+  RIGHT: -1,
 };
 
 const ISLANDS = {
@@ -81,9 +85,14 @@ const ISLANDS = {
   ContactPosition: [-6, 0, 0],
   ContactModelPosition: [0, 2.1, -0.15],
   ContactTextPosition: [0, 2.75, 0],
+  // Space island
+  SpaceModelPosition: [0, 2.4, 0.4],
+  SpaceModelTextPosition: [0, 2.8, 0.4],
   // Why island
-  WhyModelPosition: [0, 2, 0.5],
+  WhyModelPosition: [0, 2, 0],
   WhyTextPosition: [0, 3.25, 0.4],
+  // Projects island
+  ProjectsModelPosition: [0, 2.2, 0],
   // Services island
   ServicesPosition: [0, 0, -6],
   ServicesModelPosition: [0, 2.15, 0],
@@ -95,7 +104,7 @@ const ISLANDS = {
   PhysicsTextRotation: -3.5,
   // VR island
   VRPosition: [6, 0, 0],
-  VRModelPosition: [2, -7, -1.5],
+  VRModelPosition: [2, -7, -1.75],
   VRTextPosition: [0.25, 3.25, 0],
   VRTextRotation: Math.PI / 2,
   // AR island
@@ -113,9 +122,6 @@ const ISLANDS = {
   // Performance island
   PerformanceModelPosition: [0, 1.5, 0],
   PerformanceTextPosition: [0, 3.5, 0],
-  // Space island
-  SpaceModelPosition: [0, 2.5, 0],
-  SpaceTextPosition: [0, 3, 0],
   // Tech island
   TechPosition: [-3.927, 0, 3.527],
   TechModelPosition: [0, 2.2, 0],
@@ -131,23 +137,23 @@ const ISLANDS = {
   DataVizTextRotation: 0.3,
   // Med viz island
   MedVizPosition: [6, 0, 0],
-  MedVizModelPosition: [0, 3, 0],
+  MedVizModelPosition: [0, 2.75, 0],
   MedVizTextPosition: [0, 4, 0],
   // Brain viz island
   BrainVizPosition: [-3.927, 0, -3.527],
-  BrainVizModelPosition: [0, 3, 0],
+  BrainVizModelPosition: [0, 2.75, 0],
   BrainVizTextPosition: [0, 4, 0],
   // Covid viz island
   CovidVizPosition: [-3.927, 0, 3.527],
-  CovidVizModelPosition: [0, 3, 0],
+  CovidVizModelPosition: [0, 2.75, 0],
   CovidVizTextPosition: [0, 4, 0],
   // Finance viz island
   FinanceVizPosition: [1.854, 0, 5.706],
-  FinanceVizModelPosition: [0, 3, 0],
+  FinanceVizModelPosition: [0, 2.75, 0],
   FinanceVizTextPosition: [0, 4, 0],
   // Sleep viz island
   SleepVizPosition: [1.854, 0, -5.706],
-  SleepVizModelPosition: [0, 3, 0],
+  SleepVizModelPosition: [0, 2.75, 0],
   SleepVizTextPosition: [0, 4, 0],
 };
 
@@ -185,14 +191,14 @@ const SLOTS = {
 };
 
 const MATERIALS = {
-  GRASS: new MeshLambertMaterial({ color: "green" }),
-  EARTH: new MeshLambertMaterial({
+  GRASS: new THREE.MeshLambertMaterial({ color: "green" }),
+  EARTH: new THREE.MeshLambertMaterial({
     color: 0x210f00,
   }),
-  CLOUD: new MeshLambertMaterial({ color: "white" }),
-  GREY: new MeshLambertMaterial({ color: 0x333333 }),
-  ORANGE: new MeshLambertMaterial({ color: 0xcc2906 }),
-  SHINY_ORANGE: new MeshPhongMaterial({ color: 0xcc2906 }),
+  CLOUD: new THREE.MeshLambertMaterial({ color: "white" }),
+  GREY: new THREE.MeshLambertMaterial({ color: 0x333333 }),
+  ORANGE: new THREE.MeshLambertMaterial({ color: 0xcc2906 }),
+  SHINY_ORANGE: new THREE.MeshPhongMaterial({ color: 0xcc2906 }),
 };
 
 export { SCENE, ISLANDS, MODALS, MATERIALS, SLOTS, TRANSITIONS };

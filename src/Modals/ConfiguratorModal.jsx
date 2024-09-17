@@ -40,7 +40,6 @@ const ConfiguratorModal = ({ showModal }) => {
             <Col xs={4}>
               <Button
                 href="https://drt-software.com/Demos/Configurator/"
-                rel="noreferrer"
                 target="_blank"
                 className="me-2"
                 variant="primary"

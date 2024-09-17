@@ -6,7 +6,7 @@ import { SCENE, ISLANDS, MODALS, TRANSITIONS } from "../state/Config.js";
 import { Target } from "../Models/Target.jsx";
 import useStore from "../state/store.js";
 
-export const IslandPerformance = ({ name, fadeIn, fadeOut }) => {
+export const IslandPerformance = ({ name, fadeIn, fadeOut, direction }) => {
   const [hovered, setHovered] = useState(false);
 
   let fadeInEnabled = fadeIn;
@@ -17,6 +17,7 @@ export const IslandPerformance = ({ name, fadeIn, fadeOut }) => {
   const setTransitionPhase = useStore((state) => state.setTransitionPhase);
 
   const textRef = useRef();
+  const textMaterialRef = useRef();
 
   const selectIsland = () => {
     setVisibleModal(MODALS.PERFORMANCE);
@@ -40,20 +41,21 @@ export const IslandPerformance = ({ name, fadeIn, fadeOut }) => {
 
   useFrame((state, delta) => {
     if (fadeOutEnabled) {
-      textRef.current.opacity -= delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity < 0) {
-        textRef.current.opacity = 0;
+      textMaterialRef.current.opacity -= delta * SCENE.FADE_DELAY;
+      textRef.current.position.x += delta * direction;
+      if (textMaterialRef.current.opacity < 0) {
+        textMaterialRef.current.opacity = 0;
         fadeOutEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_IN);
       }
     }
     if (fadeInEnabled) {
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 0;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 0;
       }
-      textRef.current.opacity += delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 1;
+      textMaterialRef.current.opacity += delta * SCENE.FADE_DELAY;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 1;
         fadeInEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_OUT);
         setActiveIsland(name);
@@ -74,6 +76,7 @@ export const IslandPerformance = ({ name, fadeIn, fadeOut }) => {
           fadeIn={fadeIn}
           fadeOut={fadeOut}
           position={ISLANDS.PerformanceModelPosition}
+          direction={direction}
         />
 
         <Shadow
@@ -87,6 +90,7 @@ export const IslandPerformance = ({ name, fadeIn, fadeOut }) => {
         />
         <IslandPoints />
         <Text
+          ref={textRef}
           color="white"
           center
           fontSize={SCENE.FONT_SIZE}
@@ -97,7 +101,7 @@ export const IslandPerformance = ({ name, fadeIn, fadeOut }) => {
           outlineColor="black"
         >
           Performance
-          <meshBasicMaterial ref={textRef} transparent={true} />
+          <meshBasicMaterial ref={textMaterialRef} transparent={true} />
         </Text>
       </group>
     </Float>

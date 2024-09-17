@@ -26,13 +26,11 @@ const InfoModal = ({ showModal }) => {
       </Modal.Header>
 
       <Modal.Body>
+        <p>Use the left/right arrows to see all the options.</p>
+        <p>Click on the islands for more information.</p>
+        <p>Use the Explore menu to switch between the different levels.</p>
         <p>
-          Use the <strong>rotate</strong> buttons at the bottom to rotate the
-          islands, then click the nearest island for more information.
-        </p>
-        <p>
-          If you want to access the levels or demos directly then just use the
-          link {<Link />} icon on the left.
+          For added ambience try the day/night mode and play a little music!
         </p>
         <p>
           Thanks to the{" "}
@@ -44,6 +42,10 @@ const InfoModal = ({ showModal }) => {
             blend swap
           </a>{" "}
           community for the majority of the models.
+        </p>
+        <p>
+          Please contact me if you have any questions{" "}
+          <Button href="mailto:enquiries@drt-software.com">Contact</Button>
         </p>
       </Modal.Body>
 

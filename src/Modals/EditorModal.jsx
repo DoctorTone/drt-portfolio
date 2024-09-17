@@ -39,9 +39,8 @@ const EditorModal = ({ showModal }) => {
             </Col>
             <Col xs={4}>
               <Button
-                href="https://drt-software.com/Demos/Editor"
+                href="https://drt-software.com/Demos/Editor/"
                 target="_blank"
-                rel="noreferrer"
                 className="me-2"
                 variant="warning"
               >

@@ -5,7 +5,7 @@ import {
   Tools,
   TelephoneFill,
   ArchiveFill,
-  AlarmFill,
+  Keyboard,
   InfoLg,
 } from "react-bootstrap-icons";
 import {
@@ -81,18 +81,18 @@ const CircularOptionsMainMenu = ({ onToggle, open }) => {
           <TelephoneFill />
         </CircleMenuItem>
         <CircleMenuItem
-          onClick={() => setVisibleModal(MODALS.PROJECTS)}
+          onClick={() => displayIsland("projects")}
           tooltip="Projects"
           tooltipPlacement={TooltipPlacement.Top}
         >
           <ArchiveFill />
         </CircleMenuItem>
         <CircleMenuItem
-          onClick={() => setVisibleModal(MODALS.LATEST)}
-          tooltip="Latest"
+          onClick={() => displayIsland("tech")}
+          tooltip="Tech"
           tooltipPlacement={TooltipPlacement.Top}
         >
-          <AlarmFill />
+          <Keyboard />
         </CircleMenuItem>
       </CircleMenu>
       <Button variant="dark" className="mt-1 orangeText" size="sm">

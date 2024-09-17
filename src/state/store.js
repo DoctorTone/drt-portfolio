@@ -3,19 +3,73 @@ import { SCENE, MODALS, TRANSITIONS } from "./Config.js";
 
 const useStore = create((set) => ({
   // Levels in system
-  levels: ["Portfolio", "DataViz"],
-  currentLevel: "Portfolio",
-  setCurrentLevel: (levelName) => set({ currentLevel: levelName }),
-  onEnterLevel: true,
+  levels: ["Landing", "Portfolio", "DataViz"],
+  mainLevels: ["about", "services", "why", "contact", "projects", "tech"],
+  portfolioLevels: [
+    "configurator",
+    "editor",
+    "physics",
+    "space",
+    "vr",
+    "effects",
+    "performance",
+    "ar",
+  ],
+  dataLevels: ["medical", "finance", "pandemic", "sleep", "realtime"],
+  currentLevel: "Landing",
+  currentLevelTable: null,
+  setCurrentLevel: (levelName) =>
+    set((state) => ({
+      currentLevel: levelName,
+      islandNumber: 0,
+      currentLevelTable:
+        levelName === "Main"
+          ? state.mainLevels
+          : levelName === "Portfolio"
+          ? state.portfolioLevels
+          : state.dataLevels,
+    })),
+  currentDirection: TRANSITIONS.LEFT,
+  setCurrentDirection: (direction) => set({ currentDirection: direction }),
+  onEnterLevel: false,
   onLeaveLevel: false,
   enterLevel: (status) => set({ onEnterLevel: status }),
   leaveLevel: (status) => set({ onLeaveLevel: status }),
+  // Wireframe cubes on landing page
+  cubeData: [1, 2, 3, 4, 5],
+  // Day/night mode
+  dayMode: true,
+  toggleDayMode: () => set((state) => ({ dayMode: !state.dayMode })),
   // Island slot positions
   activeIsland: "configurator",
   targetIsland: "configurator",
+  islandNumber: 0,
+  currentSlots: ["Contact", "About", "Services"],
+  getSlotPosition: (slots, island) => {
+    for (let i = 0; i < slots.length; ++i) {
+      if (slots[i] === island) return i;
+    }
+
+    return -1;
+  },
   ignoreButtonPress: false,
   setActiveIsland: (island) => set({ activeIsland: island }),
-  setTargetIsland: (island) => set({ targetIsland: island }),
+  setTargetIsland: (island) => {
+    set((state) => ({
+      targetIsland:
+        island < 0
+          ? state.currentLevelTable[state.currentLevelTable.length - 1]
+          : island === state.currentLevelTable.length
+          ? state.currentLevelTable[0]
+          : state.currentLevelTable[island],
+      islandNumber:
+        island < 0
+          ? state.currentLevelTable.length - 1
+          : island === state.currentLevelTable.length
+          ? 0
+          : island,
+    }));
+  },
   transitionPhase: TRANSITIONS.FADE_OUT,
   setTransitionPhase: (phase) => set({ transitionPhase: phase }),
   updateSlots: (slots) => set({ currentSlots: [...slots] }),

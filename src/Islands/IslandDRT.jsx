@@ -6,18 +6,17 @@ import { SCENE, ISLANDS, MODALS, TRANSITIONS } from "../state/Config.js";
 import useStore from "../state/store.js";
 import { useFrame } from "@react-three/fiber";
 
-export const IslandDRT = ({ name, fadeIn, fadeOut }) => {
+export const IslandDRT = ({ name, fadeIn, fadeOut, direction }) => {
   const [hovered, setHovered] = useState(false);
 
   let fadeInEnabled = fadeIn;
   let fadeOutEnabled = fadeOut;
 
   const setVisibleModal = useStore((state) => state.setVisibleModal);
-  const speechBubbleVisible = useStore((state) => state.speechBubbleVisible);
-  const displaySpeechBubble = useStore((state) => state.displaySpeechBubble);
   const setTransitionPhase = useStore((state) => state.setTransitionPhase);
   const setActiveIsland = useStore((state) => state.setActiveIsland);
 
+  const textMaterialRef = useRef();
   const textRef = useRef();
 
   const selectIsland = () => {
@@ -40,22 +39,23 @@ export const IslandDRT = ({ name, fadeIn, fadeOut }) => {
 
   useCursor(hovered);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (fadeOutEnabled) {
-      textRef.current.opacity -= delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity < 0) {
-        textRef.current.opacity = 0;
+      textMaterialRef.current.opacity -= delta * SCENE.FADE_DELAY;
+      textRef.current.position.x += delta * direction;
+      if (textMaterialRef.current.opacity < 0) {
+        textMaterialRef.current.opacity = 0;
         fadeOutEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_IN);
       }
     }
     if (fadeInEnabled) {
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 0;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 0;
       }
-      textRef.current.opacity += delta * SCENE.FADE_DELAY;
-      if (textRef.current.opacity >= 1) {
-        textRef.current.opacity = 1;
+      textMaterialRef.current.opacity += delta * SCENE.FADE_DELAY;
+      if (textMaterialRef.current.opacity >= 1) {
+        textMaterialRef.current.opacity = 1;
         fadeInEnabled = false;
         setTransitionPhase(TRANSITIONS.FADE_OUT);
         setActiveIsland(name);
@@ -73,6 +73,7 @@ export const IslandDRT = ({ name, fadeIn, fadeOut }) => {
         position={ISLANDS.MAIN_POSITION}
       >
         <DRT_Fixed
+          direction={direction}
           fadeIn={fadeIn}
           fadeOut={fadeOut}
           position={ISLANDS.DRTModelPosition}
@@ -88,6 +89,7 @@ export const IslandDRT = ({ name, fadeIn, fadeOut }) => {
         />
         <IslandPoints />
         <Text
+          ref={textRef}
           color="white"
           center
           fontSize={SCENE.FONT_SIZE}
@@ -98,7 +100,7 @@ export const IslandDRT = ({ name, fadeIn, fadeOut }) => {
           outlineColor="black"
         >
           About
-          <meshBasicMaterial ref={textRef} transparent={true} />
+          <meshBasicMaterial ref={textMaterialRef} transparent={true} />
         </Text>
       </group>
     </Float>

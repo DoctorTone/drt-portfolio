@@ -8,7 +8,6 @@ import {
   PenFill,
   Speedometer,
   HandIndexThumb,
-  RocketTakeoff,
 } from "react-bootstrap-icons";
 import {
   CircleMenu,
@@ -92,13 +91,6 @@ const CircularOptionsMainMenu = ({ onToggle, open }) => {
           tooltipPlacement={TooltipPlacement.Top}
         >
           <Speedometer />
-        </CircleMenuItem>
-        <CircleMenuItem
-          onClick={() => displayIsland("space")}
-          tooltip="Space"
-          tooltipPlacement={TooltipPlacement.Top}
-        >
-          <RocketTakeoff />
         </CircleMenuItem>
         <CircleMenuItem
           onClick={() => displayIsland("ar")}
